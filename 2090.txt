@@ -1,0 +1,28 @@
+class Solution {
+public:
+    vector<int> getAverages(vector<int>& nums, int k) {
+        int n = nums.size();
+        int window_size = 2 * k + 1;
+        vector<int> avgs(n, -1);
+        
+        if (n < window_size) {
+            return avgs;
+        }
+        
+        long long current_sum = 0;
+        
+        for (int i = 0; i < window_size; ++i) {
+            current_sum += nums[i];
+        }
+        
+        for (int i = k; i < n - k; ++i) {
+            avgs[i] = static_cast<int>(current_sum / window_size);
+            
+            if (i + k + 1 < n) {
+                current_sum = current_sum - nums[i - k] + nums[i + k + 1];
+            }
+        }
+        
+        return avgs;
+    }
+};
